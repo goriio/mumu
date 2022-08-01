@@ -34,10 +34,10 @@ export function AppRoutes() {
   function handleMusicItemClick(id: number, music: IMusic[]) {
     setCurrentMusicList(music);
     setCurrent(music.find((item) => item.id === id) as IMusic);
-    setIsPlaying(true);
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
     }
+    setIsPlaying(false);
   }
 
   return (
@@ -100,7 +100,13 @@ export function AppRoutes() {
         setIsPlaying={setIsPlaying}
         audioRef={audioRef}
       />
-      <audio ref={audioRef} src={current?.url.audio} />
+      <audio
+        ref={audioRef}
+        src={current?.url.audio}
+        onCanPlay={() => {
+          setIsPlaying(true);
+        }}
+      />
     </>
   );
 }

@@ -10,8 +10,6 @@ export const GlobalStyles = createGlobalStyle`
 
     --overlay: #0000003a;
 
-
-
     --box-shadow: #0000001a 0 0 5px 0, #0000001a 0 0 1px 0;
 
     --border-radius: 4px;
@@ -19,7 +17,7 @@ export const GlobalStyles = createGlobalStyle`
 
     --nav-height: 60px;
     --nav-lg-screen-width: 250px;
-
+    --progress-bar-height: 4px;
 
     --speed: 200ms;
 
