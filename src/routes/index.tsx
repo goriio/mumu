@@ -4,6 +4,7 @@ import { Container } from '../components/Container';
 import { MusicList } from '../components/Music';
 import { NavBar } from '../components/NavBar';
 import { Player } from '../components/Player';
+import { SearchBar } from '../components/SearchBar';
 import { musicList } from '../data/music';
 import { IMusic } from '../types';
 
@@ -11,6 +12,8 @@ export function AppRoutes() {
   const [currentMusicList, setCurrentMusicList] = useState<IMusic[] | null>(null);
   const [current, setCurrent] = useState<IMusic | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [search, setSearch] = useState('');
+
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -45,7 +48,23 @@ export function AppRoutes() {
               />
             }
           />
-          <Route path='/search' element={<p>Still working on search feature.</p>} />
+          <Route
+            path='/search'
+            element={
+              <>
+                <SearchBar search={search} setSearch={setSearch} />
+                <MusicList
+                  title='Search results'
+                  musicList={musicList.filter(
+                    (music) =>
+                      music.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+                      music.artist.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
+                  )}
+                  handleMusicItemClick={handleMusicItemClick}
+                />
+              </>
+            }
+          />
           <Route path='/playlist' element={<p>Still working on playlist feature.</p>} />
           <Route path='/settings' element={<p>Still working on settings feature.</p>} />
           <Route path='*' element={<p>404</p>} />
