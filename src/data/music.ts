@@ -54,4 +54,14 @@ export const musicList: IMusic[] = [
         'https://archive.org/download/gymnopedie-no-1-by-kevin-macleod/gymnopedie-no-1-by-kevin-macleod.ogg',
     },
   },
+  {
+    id: 6,
+    title: 'Always With Me (いつも何度でも)',
+    artist: 'Wakako Kaku',
+    url: {
+      image: 'https://mindtrail.okuyamato.jp/2020/images/artists/ob_kaku/portrait.jpg',
+      audio:
+        'https://ia600908.us.archive.org/24/items/ItsumoNandoDemoSenToChihiroNoKamikakushi/Itsumo%20Nando%20Demo%20%28Sen%20to%20Chihiro%20no%20Kamikakushi%29.ogg',
+    },
+  },
 ];
