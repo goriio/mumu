@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { IMusic } from '../types';
-import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { BiDotsVerticalRounded, BiPlus, BiTrashAlt } from 'react-icons/bi';
 import { Modal } from './Modal';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Select } from './Select';
 
 const StyledMusic = styled.div`
   position: relative;
@@ -81,13 +82,23 @@ interface MusicProps {
   music: IMusic;
   musicList: IMusic[];
   handleMusicItemClick: (id: number, music: IMusic[]) => void;
+  playlist: IMusic[];
+  setPlaylist: Dispatch<SetStateAction<IMusic[]>>;
 }
 
-function Music({ music, musicList, handleMusicItemClick }: MusicProps) {
+function Music({ music, musicList, handleMusicItemClick, playlist, setPlaylist }: MusicProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
   function handleMenuClick() {
     setModalOpen(true);
+  }
+
+  function handleAddToPlaylist(music: IMusic) {
+    setPlaylist([...playlist, music]);
+  }
+
+  function handleRemoveFromPlaylist(music: IMusic) {
+    setPlaylist(playlist.filter((item) => item.id !== music.id));
   }
 
   return (
@@ -101,7 +112,19 @@ function Music({ music, musicList, handleMusicItemClick }: MusicProps) {
       </MusicContainer>
       <Menu onClick={handleMenuClick} />
       <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
-        Working on this one.
+        {playlist.some((item) => item.id === music.id) ? (
+          <Select
+            icon={<BiTrashAlt />}
+            text='Remove from playlist'
+            onClick={() => handleRemoveFromPlaylist(music)}
+          />
+        ) : (
+          <Select
+            icon={<BiPlus />}
+            text='Add to playlist'
+            onClick={() => handleAddToPlaylist(music)}
+          />
+        )}
       </Modal>
     </StyledMusic>
   );
@@ -123,9 +146,17 @@ interface MusicListProps {
   title?: string;
   musicList: IMusic[];
   handleMusicItemClick: (id: number, music: IMusic[]) => void;
+  playlist: IMusic[];
+  setPlaylist: Dispatch<SetStateAction<IMusic[]>>;
 }
 
-export function MusicList({ title, musicList, handleMusicItemClick }: MusicListProps) {
+export function MusicList({
+  title,
+  musicList,
+  handleMusicItemClick,
+  playlist,
+  setPlaylist,
+}: MusicListProps) {
   return (
     <StyledMusicList>
       {title && <Title>{title}</Title>}
@@ -137,6 +168,8 @@ export function MusicList({ title, musicList, handleMusicItemClick }: MusicListP
               music={music}
               musicList={musicList}
               handleMusicItemClick={handleMusicItemClick}
+              playlist={playlist}
+              setPlaylist={setPlaylist}
             />
           );
         })

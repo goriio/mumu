@@ -13,8 +13,15 @@ export function AppRoutes() {
   const [current, setCurrent] = useState<IMusic | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [search, setSearch] = useState('');
+  const [playlist, setPlaylist] = useState(
+    JSON.parse(localStorage.getItem('playlist') || '[]') as IMusic[],
+  );
 
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('playlist', JSON.stringify(playlist));
+  }, [playlist]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -45,6 +52,8 @@ export function AppRoutes() {
                 title='All Music'
                 musicList={musicList}
                 handleMusicItemClick={handleMusicItemClick}
+                playlist={playlist}
+                setPlaylist={setPlaylist}
               />
             }
           />
@@ -61,11 +70,24 @@ export function AppRoutes() {
                       music.artist.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
                   )}
                   handleMusicItemClick={handleMusicItemClick}
+                  playlist={playlist}
+                  setPlaylist={setPlaylist}
                 />
               </>
             }
           />
-          <Route path='/playlist' element={<p>Still working on playlist feature.</p>} />
+          <Route
+            path='/playlist'
+            element={
+              <MusicList
+                title='Playlist'
+                musicList={playlist}
+                handleMusicItemClick={handleMusicItemClick}
+                playlist={playlist}
+                setPlaylist={setPlaylist}
+              />
+            }
+          />
           <Route path='/settings' element={<p>Still working on settings feature.</p>} />
           <Route path='*' element={<p>404</p>} />
         </Routes>

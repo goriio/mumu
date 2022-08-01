@@ -16,8 +16,8 @@ const Card = styled.div`
   bottom: 0;
   width: 100%;
   max-width: 500px;
-  padding: 1rem;
   padding-top: 2rem;
+  padding-bottom: 1rem;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
   background: var(--color-bg);
