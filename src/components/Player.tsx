@@ -48,19 +48,28 @@ const Control = styled.div`
   font-size: 2.5rem;
 `;
 
-const Progress = styled.progress`
+const Progress = styled.input.attrs({ type: 'range' })`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -4px;
   width: 100%;
-  height: var(--progress-bar-height);
+  background: transparent;
   border: none;
-  background: var(--color-fg);
+  -webkit-appearance: none;
 
-  &::-moz-progress-bar,
-  &::-webkit-progress-value {
+  &::-webkit-slider-runnable-track,
+  &::-moz-range-track {
+    background: var(--color-fg);
+    height: var(--progress-bar-height);
+  }
+
+  &::-webkit-slider-thumb,
+  &::-moz-range-thumb {
+    height: var(--progress-bar-height);
+    width: var(--progress-bar-height);
     background: var(--color-primary);
+    border: none;
   }
 `;
 
@@ -81,11 +90,17 @@ export function Player({
   setIsPlaying,
   audioRef,
 }: PlayerProps) {
-  const progressRef = useRef<HTMLProgressElement>(null);
+  const progressRef = useRef<HTMLInputElement>(null);
 
   function handleProgressUpdate() {
     if (progressRef.current && audioRef.current) {
-      progressRef.current.value = audioRef.current.currentTime / audioRef.current.duration;
+      progressRef.current.value = String(audioRef.current.currentTime);
+    }
+  }
+
+  function handleProgressSeek() {
+    if (progressRef.current && audioRef.current) {
+      audioRef.current.currentTime = Number(progressRef.current.value);
     }
   }
 
@@ -94,10 +109,12 @@ export function Player({
     return () => {
       audioRef.current?.removeEventListener('timeupdate', handleProgressUpdate);
     };
-  }, []);
+  });
 
   function handleNext() {
     const index = musicList?.findIndex((music) => music.id === current?.id) as number;
+
+    setIsPlaying(false);
 
     if (musicList && musicList.length - 1 === index) {
       setCurrent(musicList?.at(0) as IMusic);
@@ -109,6 +126,13 @@ export function Player({
       audioRef.current.currentTime = 0;
     }
   }
+
+  useEffect(() => {
+    audioRef.current?.addEventListener('ended', handleNext);
+    return () => {
+      audioRef.current?.removeEventListener('ended', handleNext);
+    };
+  });
 
   return (
     <>
@@ -124,7 +148,13 @@ export function Player({
             )}
             <BiSkipNext onClick={handleNext} />
           </Control>
-          <Progress ref={progressRef} value='0' max='1' />
+          <Progress
+            ref={progressRef}
+            onChange={handleProgressSeek}
+            value='0'
+            min='0'
+            max={audioRef.current?.duration}
+          />
         </StyledPlayer>
       )}
     </>

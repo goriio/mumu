@@ -17,7 +17,7 @@ export const GlobalStyles = createGlobalStyle`
 
     --nav-height: 60px;
     --nav-lg-screen-width: 250px;
-    --progress-bar-height: 4px;
+    --progress-bar-height: 8px;
 
     --speed: 200ms;
 
