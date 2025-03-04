@@ -7,13 +7,16 @@ import { Shuffle2Fill } from "~/components/icons/shuffle-2-fill";
 import { MusicCardItem } from "~/components/music-card-item";
 import { MusicListItem } from "~/components/music-list-item";
 import { Button } from "~/components/ui/button";
+import { shuffleArray } from "~/lib/shuffle-array";
 import { useMusicStore } from "~/store/use-music-store";
 import { usePlayerStore } from "~/store/use-player-store";
 
 export default function Home() {
+  const router = useRouter();
   const { play, setPlaylist } = usePlayerStore();
   const { musicList } = useMusicStore();
-  const router = useRouter();
+
+  const newReleases = musicList.slice(0, 6);
 
   return (
     <div className="space-y-6 md:space-y-8">
@@ -23,8 +26,9 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <Button
               onClick={() => {
-                setPlaylist(musicList);
-                play(musicList[0]);
+                const shuffledNewReleases = shuffleArray(newReleases);
+                setPlaylist(shuffledNewReleases);
+                play(shuffledNewReleases[0]);
               }}
               size="icon"
               variant="secondary"
@@ -33,8 +37,8 @@ export default function Home() {
             </Button>
             <Button
               onClick={() => {
-                setPlaylist(musicList);
-                play(musicList[0]);
+                setPlaylist(newReleases);
+                play(newReleases[0]);
               }}
               size="icon"
             >
@@ -50,7 +54,7 @@ export default function Home() {
           />
 
           <ul className="flex flex-col gap-1">
-            {musicList.slice(0, 6).map((music) => {
+            {newReleases.map((music) => {
               return (
                 <MusicListItem
                   key={music.id}
