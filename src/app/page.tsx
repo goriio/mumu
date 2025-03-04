@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Hero } from "~/components/hero";
 import { PlayFill } from "~/components/icons/play-fill";
 import { Shuffle2Fill } from "~/components/icons/shuffle-2-fill";
@@ -12,6 +13,7 @@ import { usePlayerStore } from "~/store/use-player-store";
 export default function Home() {
   const { play, setPlaylist } = usePlayerStore();
   const { musicList } = useMusicStore();
+  const router = useRouter();
 
   return (
     <div className="space-y-6 md:space-y-8">
@@ -64,7 +66,9 @@ export default function Home() {
       <section className="space-y-4">
         <div className="flex items-center justify-between gap-4">
           <h2 className="text-lg font-bold">Recommended Song Sheets</h2>
-          <Button variant="link">Show All</Button>
+          <Button onClick={() => router.push("/songs")} variant="link">
+            Show All
+          </Button>
         </div>
         <ul className="flex items-start gap-1 overflow-x-auto">
           {musicList.map((music) => {
