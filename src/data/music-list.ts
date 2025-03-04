@@ -61,4 +61,44 @@ export const musicList: Music[] = [
       "https://ia600908.us.archive.org/24/items/ItsumoNandoDemoSenToChihiroNoKamikakushi/Itsumo%20Nando%20Demo%20%28Sen%20to%20Chihiro%20no%20Kamikakushi%29.ogg",
     liked: false,
   },
+  {
+    id: 7,
+    title: "Sonata No. 14 Moonlight Op. 27, No. 2, 3rd Movement",
+    artist: "Ludwig van Beethoven",
+    albumImageUrl:
+      "https://d2kdkfqxnvpuu9.cloudfront.net/images/original/69721.jpg",
+    audioUrl:
+      "https://ia800900.us.archive.org/27/items/SonataNo.14MoonlightOp.27No.2/Sonata%20No.%2014%20Moonlight%20-%20Op.%2027%2C%20No.%202%2C%203rd%20movement-sonata-284.ogg",
+    liked: false,
+  },
+  {
+    id: 8,
+    title: "Etude Op. 25, No. 5 (Wrong Note)",
+    artist: "Frederic Chopin",
+    albumImageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/3/33/Chopin%2C_by_Wodzinska.JPG",
+    audioUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6c/Chopin_-_12_%C3%89tudes%2C_Op._25_-_No._5_in_E_minor_%27Wrong_Note%27_%28Edward_Neeman%29.flac/Chopin_-_12_%C3%89tudes%2C_Op._25_-_No._5_in_E_minor_%27Wrong_Note%27_%28Edward_Neeman%29.flac.ogg",
+    liked: false,
+  },
+  {
+    id: 9,
+    title: "Violin Sonata No. 9 in A, Op. 47, 1st Movement",
+    artist: "Ludwig van Beethoven",
+    albumImageUrl:
+      "https://d2kdkfqxnvpuu9.cloudfront.net/images/original/69721.jpg",
+    audioUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/8/87/Beethoven_-_opus47-1_01.ogg",
+    liked: false,
+  },
+  {
+    id: 10,
+    title: "Twelve Variations on 'Ah vous dirai-je, Maman', K. 265",
+    artist: "Wolfgang Amadeus Mozart",
+    albumImageUrl:
+      "https://i0.wp.com/con2bemolesradio.com/wp-content/uploads/2018/07/Mozart.jpg",
+    audioUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/af/Mozart_-_12_Variations_K._265_-_Stefano_Ligoratti.mp3/Mozart_-_12_Variations_K._265_-_Stefano_Ligoratti.mp3.ogg",
+    liked: false,
+  },
 ];
