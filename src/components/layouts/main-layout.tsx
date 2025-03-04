@@ -47,13 +47,19 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
         <footer className="flex flex-col md:flex-row gap-6 md:gap-8 md:items-center justify-between mt-8 mb-20 pt-6 md:pt-8 border-t border-t-slate-800">
           <ul className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8">
             <li className="text-sm text-slate-600 transition ease-linear hover:text-slate-400 cursor-pointer">
-              Open Source
+              <a href="https://github.com/goriio/mumu" target="_blank">
+                Open Source
+              </a>
             </li>
             <li className="text-sm text-slate-600 transition ease-linear hover:text-slate-400 cursor-pointer">
-              Report Issues
+              <a href="https://github.com/goriio/mumu/issues" target="_blank">
+                Report Issues
+              </a>
             </li>
             <li className="text-sm text-slate-600 transition ease-linear hover:text-slate-400 cursor-pointer">
-              About The Developer
+              <a href="https://github.com/goriio" target="_blank">
+                About The Developer
+              </a>
             </li>
           </ul>
           <p className="text-sm text-slate-600">
