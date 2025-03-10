@@ -4,10 +4,8 @@ import Image from "next/image";
 import { usePlayerStore } from "~/store/use-player-store";
 import { Music } from "~/types/music";
 import { MusicDuration } from "./ui/music-duration";
-import { HeartLine } from "./icons/heart-line";
 import { DotsVertical } from "./icons/dots-vertical";
 import { cn } from "~/lib/utils";
-import { HeartFill } from "./icons/heart-fill";
 import { useMusicStore } from "~/store/use-music-store";
 import {
   DropdownMenu,
@@ -34,6 +32,7 @@ import {
 } from "./ui/select";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
+import { LikeButton } from "./ui/like-button";
 
 export type MusicListItemProps = {
   music: Music;
@@ -71,13 +70,13 @@ export function MusicListItem({
     setPlayedAt(music.id);
   }
 
-  function handleLikeMusic(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleLikeMusic(event: React.MouseEvent) {
     event.stopPropagation();
     likeMusic(music.id);
     toast("Added to liked music.");
   }
 
-  function handleUnlikeMusic(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleUnlikeMusic(event: React.MouseEvent) {
     event.stopPropagation();
     unlikeMusic(music.id);
     toast("Removed from liked music.");
@@ -121,13 +120,11 @@ export function MusicListItem({
       </div>
       <div className="flex items-center gap-4">
         <MusicDuration audioUrl={music.audioUrl} />
-        <button onClick={music.liked ? handleUnlikeMusic : handleLikeMusic}>
-          {music.liked ? (
-            <HeartFill className="text-lg text-red-500" />
-          ) : (
-            <HeartLine className="text-lg text-slate-400 transition ease-in-out hover:text-red-500" />
-          )}
-        </button>
+        <LikeButton
+          liked={music.liked}
+          onLike={handleLikeMusic}
+          onUnlike={handleUnlikeMusic}
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild className="outline-none">
             <button>

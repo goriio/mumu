@@ -5,15 +5,22 @@ import { SkipPreviousFill } from "../icons/skip-previous-fill";
 import { PlayFill } from "../icons/play-fill";
 import { SkipForwardFill } from "../icons/skip-forward-fill";
 import { VolumeFill } from "../icons/volume-fill";
-import { HeartLine } from "../icons/heart-line";
 import { useRef, useState } from "react";
 import { PauseFill } from "../icons/pause-fill";
 import { formatDuration } from "~/lib/formats";
 import { usePlayerStore } from "~/store/use-player-store";
 import { Slider } from "./slider";
+import { useMusicStore } from "~/store/use-music-store";
+import { LikeButton } from "./like-button";
+import { toast } from "sonner";
 
 export function Player() {
   const { currentTrack, isPlaying, playlist, play, pause } = usePlayerStore();
+  const { likeMusic, unlikeMusic, musicList } = useMusicStore();
+
+  const currentMusic = currentTrack
+    ? musicList.find((music) => music.id === currentTrack.id)
+    : null;
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState(0);
@@ -27,6 +34,22 @@ export function Player() {
   async function handlePause() {
     audioRef.current?.pause();
     pause();
+  }
+
+  function handleLikeMusic(event: React.MouseEvent) {
+    event.stopPropagation();
+    if (currentMusic) {
+      likeMusic(currentMusic.id);
+      toast("Added to liked music.");
+    }
+  }
+
+  function handleUnlikeMusic(event: React.MouseEvent) {
+    event.stopPropagation();
+    if (currentMusic) {
+      unlikeMusic(currentMusic.id);
+      toast("Removed from liked music.");
+    }
   }
 
   function handlePreviousTrack() {
@@ -138,9 +161,11 @@ export function Player() {
               />
             </div>
 
-            <div>
-              <HeartLine className="text-lg text-slate-200" />
-            </div>
+            <LikeButton
+              liked={currentMusic?.liked || false}
+              onLike={handleLikeMusic}
+              onUnlike={handleUnlikeMusic}
+            />
           </div>
         </section>
       )}
