@@ -183,9 +183,16 @@ export function MusicListItem({
                   </SelectContent>
                 )}
               </Select>
+              {playlists.length === 0 && (
+                <span className="text-xs text-red-500">
+                  You haven&apos;t added any playlists
+                </span>
+              )}
             </div>
             <DialogFooter>
-              <Button type="submit">Add Music</Button>
+              <Button type="submit" disabled={playlists.length === 0}>
+                Add Music
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>
